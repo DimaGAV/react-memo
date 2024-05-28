@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import styles from "./SelectLevelPage.module.css";
+import { useEffect, useState } from "react";
 
 export function SelectLevelPage() {
+  const [mode, setMode] = useState(false);
+  useEffect(() => {
+    localStorage.setItem("mode", mode);
+  }, [mode]);
+
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
@@ -23,6 +29,8 @@ export function SelectLevelPage() {
             </Link>
           </li>
         </ul>
+        {/* стилизовать чек бокс */}
+        <input type="checkbox" onChange={() => setMode(!mode)} />
       </div>
     </div>
   );

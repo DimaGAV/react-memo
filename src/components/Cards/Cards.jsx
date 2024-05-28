@@ -50,6 +50,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [gameStartDate, setGameStartDate] = useState(null);
   // Дата конца игры
   const [gameEndDate, setGameEndDate] = useState(null);
+  const mode = localStorage.getItem("mode");
+  const [lifes, setLifes] = useState(mode === "true" ? 3 : 1);
 
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
   const [timer, setTimer] = useState({
@@ -119,7 +121,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       if (sameCards.length < 2) {
         return true;
       }
-
+      // Сюда вставить логику закрытия неправильно открытых карт при игре с попытками
       return false;
     });
 
@@ -127,8 +129,14 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
     if (playerLost) {
-      finishGame(STATUS_LOST);
-      return;
+      /* if (lifes > 0) { */
+      setLifes(lifes - 1);
+      if (lifes === 1) {
+        console.log(lifes);
+        finishGame(STATUS_LOST);
+        return;
+      }
+      // }
     }
 
     // ... игра продолжается
@@ -175,6 +183,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
+        {/* стилизовать счетчик попыток */}
+        <p>{lifes}</p>
         <div className={styles.timer}>
           {status === STATUS_PREVIEW ? (
             <div>
