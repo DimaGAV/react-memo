@@ -30,9 +30,8 @@ export function SelectLevelPage() {
           </li>
         </ul>
         {/* стилизовать чек бокс */}
-        <label className={styles.selectModeLabel} for="three-try-game">
+        <label className={styles.selectModeLabel}>
           <input
-            id="three-try-game"
             label="Игра с 3 попытками"
             className={styles.selectModeCheckbox}
             type="checkbox"

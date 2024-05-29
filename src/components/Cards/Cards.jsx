@@ -208,7 +208,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                 <div>{timer.seconds.toString().padStart("2", "0")}</div>
               </div>
               <div>
-                <p className={styles.threetrygame}>Осталось попыток: {lifes}</p>
+                <p className={styles.threetrygame}>Осталось попыток: {lifes} </p>
               </div>
             </>
           )}
