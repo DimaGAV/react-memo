@@ -30,7 +30,16 @@ export function SelectLevelPage() {
           </li>
         </ul>
         {/* стилизовать чек бокс */}
-        <input type="checkbox" onChange={() => setMode(!mode)} />
+        <label className={styles.selectModeLabel} for="three-try-game">
+          <input
+            id="three-try-game"
+            label="Игра с 3 попытками"
+            className={styles.selectModeCheckbox}
+            type="checkbox"
+            onChange={() => setMode(!mode)}
+          />
+          Игра с 3-мя попытками
+        </label>
       </div>
     </div>
   );

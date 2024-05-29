@@ -75,6 +75,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameEndDate(null);
     setTimer(getTimerValue(null, null));
     setStatus(STATUS_PREVIEW);
+    setLifes(mode === "true" ? 3 : 1);
+    setCards(shuffle(generateDeck(pairsCount, 10)));
   }
 
   /**
@@ -121,7 +123,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       if (sameCards.length < 2) {
         return true;
       }
-      // Сюда вставить логику закрытия неправильно открытых карт при игре с попытками
       return false;
     });
 
@@ -129,7 +130,13 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
     if (playerLost) {
-      /* if (lifes > 0) { */
+      setTimeout(() => {
+        setCards(prevCards =>
+          prevCards.map(card =>
+            openCardsWithoutPair.some(openCard => openCard.id === card.id) ? { ...card, open: false } : card,
+          ),
+        );
+      }, 1000);
       setLifes(lifes - 1);
       if (lifes === 1) {
         console.log(lifes);
@@ -183,8 +190,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        {/* стилизовать счетчик попыток */}
-        <p>{lifes}</p>
         <div className={styles.timer}>
           {status === STATUS_PREVIEW ? (
             <div>
@@ -202,9 +207,13 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                 <div className={styles.timerDescription}>sec</div>
                 <div>{timer.seconds.toString().padStart("2", "0")}</div>
               </div>
+              <div>
+                <p className={styles.threetrygame}>Осталось попыток: {lifes}</p>
+              </div>
             </>
           )}
         </div>
+
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>
 
