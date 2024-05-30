@@ -1,0 +1,45 @@
+.header_nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    margin-top: 52px;
+}
+
+.header_logo {
+    color: rgb(255, 255, 255);
+    font-family: StratosSkyeng;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0%;
+    text-align: left;
+}
+
+.user__fields {
+    margin-top: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.user__field {
+    display: flex;
+    justify-content: space-between;
+    width: 944px;
+    height: 64px;
+    border-radius: 12px;
+    background: #fff;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.user__field_value {
+    color: rgb(153, 153, 153);
+    /* font-family: Poppins; */
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0%;
+    text-align: left;
+}

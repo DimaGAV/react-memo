@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import { GamePage } from "./pages/GamePage/GamePage";
 import { SelectLevelPage } from "./pages/SelectLevelPage/SelectLevelPage";
+import { LiderBoardPage } from "./pages/Liderboard/LiderBoardPage";
 
 export const router = createBrowserRouter(
   [
@@ -11,6 +12,10 @@ export const router = createBrowserRouter(
     {
       path: "/game/:pairsCount",
       element: <GamePage />,
+    },
+    {
+      path: "/liderboard",
+      element: <LiderBoardPage />,
     },
   ],
   /**

@@ -29,7 +29,6 @@ export function SelectLevelPage() {
             </Link>
           </li>
         </ul>
-        {/* стилизовать чек бокс */}
         <label className={styles.selectModeLabel}>
           <input
             label="Игра с 3 попытками"
@@ -37,8 +36,9 @@ export function SelectLevelPage() {
             type="checkbox"
             onChange={() => setMode(!mode)}
           />
-          Игра с 3-мя попытками
+          Лёгкий режим (3 жизни)
         </label>
+        <Link to="/liderboard">Перейти к лидерборду</Link>
       </div>
     </div>
   );
