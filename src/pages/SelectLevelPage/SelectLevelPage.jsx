@@ -46,6 +46,7 @@ export function SelectLevelPage() {
             type="checkbox"
             onChange={() => setMode(!mode)}
           />
+          <span className={styles.checkbox_container}></span>
           Лёгкий режим (3 жизни)
         </label>
         <Link to="/leaderboard" style={linkStyle}>
