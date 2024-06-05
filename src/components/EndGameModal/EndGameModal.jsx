@@ -6,6 +6,16 @@ import deadImageUrl from "./images/dead.png";
 import celebrationImageUrl from "./images/celebration.png";
 import { useState } from "react";
 import { uploadLeaders } from "../../api";
+import { Link } from "react-router-dom";
+
+const linkStyle = {
+  marginBottom: "28px",
+  color: "rgb(0, 73, 128)",
+  fontSize: "18px",
+  fontWeight: 400,
+  lineHeight: "32px",
+  textDecorationLine: "underline",
+};
 
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader }) {
   const [userName, setUserName] = useState("");
@@ -27,8 +37,9 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
     try {
       await uploadLeaders({ name: userName, time: gameDurationMinutes * 60 + gameDurationSeconds });
       setisUpLoad(true);
+      setError(false);
     } catch (err) {
-      setError(err.message);
+      setError("Данные не отправлены! Пожалуйста, попробуйте позже");
     }
   };
   return (
@@ -44,8 +55,12 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
             value={userName}
             onChange={e => setUserName(e.target.value)}
           />
-          {error && <p /* className={styles.error} */>{error}</p>}
-          {!isUpLoad ? <Button onClick={handleSubmit}>Отправить</Button> : <p>Результат отправлен</p>}
+          {error && <p className={styles.error}>{error}</p>}
+          {!isUpLoad ? (
+            <Button onClick={handleSubmit}>Отправить</Button>
+          ) : (
+            <p className={styles.description}>Результат отправлен</p>
+          )}
         </>
       )}
       <p className={styles.description}>Затраченное время:</p>
@@ -54,6 +69,11 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       </div>
 
       <Button onClick={onClick}>Играть снова</Button>
+      {isLeader && (
+        <Link to="/leaderboard" style={linkStyle}>
+          Перейти к лидерборду
+        </Link>
+      )}
     </div>
   );
 }

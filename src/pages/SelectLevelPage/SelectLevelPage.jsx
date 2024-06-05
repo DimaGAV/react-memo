@@ -2,6 +2,15 @@ import { Link } from "react-router-dom";
 import styles from "./SelectLevelPage.module.css";
 import { useEffect, useState } from "react";
 
+const linkStyle = {
+  marginBottom: "28px",
+  color: "rgb(0, 73, 128)",
+  fontSize: "18px",
+  fontWeight: 400,
+  lineHeight: "32px",
+  textDecorationLine: "underline",
+};
+
 export function SelectLevelPage() {
   const [mode, setMode] = useState(false);
   useEffect(() => {
@@ -29,8 +38,9 @@ export function SelectLevelPage() {
             </Link>
           </li>
         </ul>
-        <label className={styles.selectModeLabel}>
+        <label for="ch1" className={styles.selectModeLabel}>
           <input
+            id="ch1"
             label="Игра с 3 попытками"
             className={styles.selectModeCheckbox}
             type="checkbox"
@@ -38,7 +48,9 @@ export function SelectLevelPage() {
           />
           Лёгкий режим (3 жизни)
         </label>
-        <Link to="/leaderboard">Перейти к лидерборду</Link>
+        <Link to="/leaderboard" style={linkStyle}>
+          Перейти к лидерборду
+        </Link>
       </div>
     </div>
   );
