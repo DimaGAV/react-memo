@@ -38,7 +38,7 @@ export function SelectLevelPage() {
           />
           Лёгкий режим (3 жизни)
         </label>
-        <Link to="/liderboard">Перейти к лидерборду</Link>
+        <Link to="/leaderboard">Перейти к лидерборду</Link>
       </div>
     </div>
   );

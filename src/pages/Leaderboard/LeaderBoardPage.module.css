@@ -1,9 +1,18 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .header_nav {
     display: flex;
-    justify-content: space-around;
-    align-items: flex-end;
+    justify-content: space-between;
+    align-items: center;
     margin-top: 52px;
+    width: 944px;
 }
+
 
 .header_logo {
     color: rgb(255, 255, 255);
@@ -31,7 +40,8 @@
     border-radius: 12px;
     background: #fff;
     align-items: center;
-    padding: 0 20px;
+    padding: 16px 20px;
+    box-sizing: border-box;
 }
 
 .user__field_value {

@@ -1,6 +1,7 @@
+//api.js
 const host = "https://wedev-api.sky.pro/api/leaderboard";
 
-export async function getLiders() {
+export async function getLeaders() {
   const response = await fetch(host, {
     method: "GET",
   });
@@ -13,7 +14,7 @@ export async function getLiders() {
   return data;
 }
 
-export async function uploadLiders({ name, time }) {
+export async function uploadLeaders({ name, time }) {
   const response = await fetch(host, {
     method: "POST",
     body: JSON.stringify({
