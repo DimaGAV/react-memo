@@ -8,15 +8,6 @@ import { useState } from "react";
 import { uploadLeaders } from "../../api";
 import { Link } from "react-router-dom";
 
-const linkStyle = {
-  marginBottom: "28px",
-  color: "rgb(0, 73, 128)",
-  fontSize: "18px",
-  fontWeight: 400,
-  lineHeight: "32px",
-  textDecorationLine: "underline",
-};
-
 export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader }) {
   const [userName, setUserName] = useState("");
   const [error, setError] = useState(null);
@@ -70,7 +61,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
 
       <Button onClick={onClick}>Играть снова</Button>
       {isLeader && (
-        <Link to="/leaderboard" style={linkStyle}>
+        <Link className={styles.leaderlink} to="/leaderboard">
           Перейти к лидерборду
         </Link>
       )}

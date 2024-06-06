@@ -5,6 +5,7 @@ import styles from "./Cards.module.css";
 import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
+import { useMode } from "../../context/mode";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -50,8 +51,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [gameStartDate, setGameStartDate] = useState(null);
   // Дата конца игры
   const [gameEndDate, setGameEndDate] = useState(null);
-  const mode = localStorage.getItem("mode");
-  const [lifes, setLifes] = useState(mode === "true" ? 3 : 1);
+  const { mode } = useMode();
+  // const mode = localStorage.getItem("mode");
+  const [lifes, setLifes] = useState(mode ? 3 : 1);
 
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
   const [timer, setTimer] = useState({
@@ -75,7 +77,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameEndDate(null);
     setTimer(getTimerValue(null, null));
     setStatus(STATUS_PREVIEW);
-    setLifes(mode === "true" ? 3 : 1);
+    setLifes(mode ? 3 : 1);
     setCards(shuffle(generateDeck(pairsCount, 10)));
   }
 
@@ -139,11 +141,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       }, 1000);
       setLifes(lifes - 1);
       if (lifes === 1) {
-        console.log(lifes);
         finishGame(STATUS_LOST);
         return;
       }
-      // }
     }
 
     // ... игра продолжается
@@ -236,7 +236,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}
             onClick={resetGame}
-            isLeader={status === STATUS_WON && pairsCount === 9}
+            isLeader={status === STATUS_WON && pairsCount === 3}
           />
         </div>
       ) : null}

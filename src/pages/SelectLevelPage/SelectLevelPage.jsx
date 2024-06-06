@@ -1,21 +1,15 @@
 import { Link } from "react-router-dom";
 import styles from "./SelectLevelPage.module.css";
-import { useEffect, useState } from "react";
-
-const linkStyle = {
-  marginBottom: "28px",
-  color: "rgb(0, 73, 128)",
-  fontSize: "18px",
-  fontWeight: 400,
-  lineHeight: "32px",
-  textDecorationLine: "underline",
-};
+// import { useEffect, useState } from "react";
+import { Button } from "../../components/Button/Button";
+import { useMode } from "../../context/mode";
 
 export function SelectLevelPage() {
-  const [mode, setMode] = useState(false);
-  useEffect(() => {
+  const { mode, setMode } = useMode();
+  // const [mode, setMode] = useState(false);
+  /* useEffect(() => {
     localStorage.setItem("mode", mode);
-  }, [mode]);
+  }, [mode]); */
 
   return (
     <div className={styles.container}>
@@ -38,18 +32,13 @@ export function SelectLevelPage() {
             </Link>
           </li>
         </ul>
-        <label for="ch1" className={styles.selectModeLabel}>
-          <input
-            id="ch1"
-            label="Игра с 3 попытками"
-            className={styles.selectModeCheckbox}
-            type="checkbox"
-            onChange={() => setMode(!mode)}
-          />
+        <label htmlFor="ch1" className={styles.selectModeLabel}>
+          <input id="ch1" label="Игра с 3 попытками" checked={mode} type="checkbox" onChange={() => setMode(!mode)} />
           <span className={styles.checkbox_container}></span>
           Лёгкий режим (3 жизни)
         </label>
-        <Link to="/leaderboard" style={linkStyle}>
+        <Button>Играть</Button>
+        <Link className={styles.leaderlink} to="/leaderboard">
           Перейти к лидерборду
         </Link>
       </div>
