@@ -59,8 +59,8 @@
   text-decoration: none;
 }
 
-.levelLink:visited {
-  color: #0080c1;
+.selected {
+  color: #f50b0b;
 }
 
 .selectModeLabel {
