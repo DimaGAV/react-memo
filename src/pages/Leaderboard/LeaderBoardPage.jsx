@@ -4,6 +4,8 @@ import { Button } from "../../components/Button/Button";
 import styles from "./LeaderBoardPage.module.css";
 import { useEffect, useState } from "react";
 import { getLeaders } from "../../api";
+import achievement1 from "../../img/achievement1.png";
+import achievement2 from "../../img/achievement2.png";
 
 function formatTime(seconds) {
   const formattedMinutes = Math.floor(seconds / 60)
@@ -13,6 +15,17 @@ function formatTime(seconds) {
     .toString()
     .padStart("2", "0");
   return `${formattedMinutes}:${formattedSeconds}`;
+}
+
+function getAchievementImage(achievements) {
+  switch (achievements) {
+    case 1:
+      return achievement1;
+    case 2:
+      return achievement2;
+    default:
+      return null;
+  }
 }
 
 export function LeaderBoardPage() {
@@ -44,6 +57,7 @@ export function LeaderBoardPage() {
         <div className={styles.user__field}>
           <div className={styles.field_title}>Позиция</div>
           <div className={styles.field_title}>Пользователь</div>
+          <div className={styles.field_title}>Достижения</div>
           <div className={styles.field_title}>Время</div>
         </div>
         {error ? (
@@ -53,6 +67,10 @@ export function LeaderBoardPage() {
             <div key={leader.id} className={styles.user__field}>
               <div className={styles.user__field_value}> # {index + 1}</div>
               <div className={styles.user__field_value}>{leader.name}</div>
+              <div className={styles.user__field_value}>
+                {/* {leader.achievements} */}
+                <img src={getAchievementImage(leader.achievements)} alt="ds" />
+              </div>
               <div className={styles.user__field_value}>{formatTime(leader.time)}</div>
             </div>
           ))
