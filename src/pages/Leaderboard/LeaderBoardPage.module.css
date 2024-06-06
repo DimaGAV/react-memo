@@ -1,0 +1,62 @@
+.header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header_nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 52px;
+    width: 944px;
+}
+
+
+.header_logo {
+    color: rgb(255, 255, 255);
+    font-family: StratosSkyeng;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    letter-spacing: 0%;
+    text-align: left;
+}
+
+.user__fields {
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.user__field {
+    display: flex;
+    justify-content: space-between;
+    width: 944px;
+    height: 64px;
+    border-radius: 12px;
+    background: #fff;
+    align-items: center;
+    padding: 16px 20px;
+    box-sizing: border-box;
+}
+
+.user__field_value {
+    color: #000;
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    text-align: left;
+    /* width: 244px; */
+}
+
+.field_title {
+    color: rgb(153, 153, 153);
+    font-size: 24px;
+    font-weight: 400;
+    line-height: 32px;
+    text-align: left;
+}
