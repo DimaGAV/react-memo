@@ -50,6 +50,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const [gameStartDate, setGameStartDate] = useState(null);
   // Дата конца игры
   const [gameEndDate, setGameEndDate] = useState(null);
+  const mode = localStorage.getItem("mode");
+  const [lifes, setLifes] = useState(mode === "true" ? 3 : 1);
 
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
   const [timer, setTimer] = useState({
@@ -73,6 +75,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setGameEndDate(null);
     setTimer(getTimerValue(null, null));
     setStatus(STATUS_PREVIEW);
+    setLifes(mode === "true" ? 3 : 1);
+    setCards(shuffle(generateDeck(pairsCount, 10)));
   }
 
   /**
@@ -119,7 +123,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       if (sameCards.length < 2) {
         return true;
       }
-
       return false;
     });
 
@@ -127,8 +130,20 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
 
     // "Игрок проиграл", т.к на поле есть две открытые карты без пары
     if (playerLost) {
-      finishGame(STATUS_LOST);
-      return;
+      setTimeout(() => {
+        setCards(prevCards =>
+          prevCards.map(card =>
+            openCardsWithoutPair.some(openCard => openCard.id === card.id) ? { ...card, open: false } : card,
+          ),
+        );
+      }, 1000);
+      setLifes(lifes - 1);
+      if (lifes === 1) {
+        console.log(lifes);
+        finishGame(STATUS_LOST);
+        return;
+      }
+      // }
     }
 
     // ... игра продолжается
@@ -192,9 +207,13 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                 <div className={styles.timerDescription}>sec</div>
                 <div>{timer.seconds.toString().padStart("2", "0")}</div>
               </div>
+              <div>
+                <p className={styles.threetrygame}>Осталось попыток: {lifes} </p>
+              </div>
             </>
           )}
         </div>
+
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>
 

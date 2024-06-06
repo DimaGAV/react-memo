@@ -1,7 +1,13 @@
 import { Link } from "react-router-dom";
 import styles from "./SelectLevelPage.module.css";
+import { useEffect, useState } from "react";
 
 export function SelectLevelPage() {
+  const [mode, setMode] = useState(false);
+  useEffect(() => {
+    localStorage.setItem("mode", mode);
+  }, [mode]);
+
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
@@ -23,6 +29,16 @@ export function SelectLevelPage() {
             </Link>
           </li>
         </ul>
+        {/* стилизовать чек бокс */}
+        <label className={styles.selectModeLabel}>
+          <input
+            label="Игра с 3 попытками"
+            className={styles.selectModeCheckbox}
+            type="checkbox"
+            onChange={() => setMode(!mode)}
+          />
+          Игра с 3-мя попытками
+        </label>
       </div>
     </div>
   );
