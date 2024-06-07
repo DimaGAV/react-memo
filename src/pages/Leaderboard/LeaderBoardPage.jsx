@@ -68,8 +68,16 @@ export function LeaderBoardPage() {
               <div className={styles.user__field_value}> # {index + 1}</div>
               <div className={styles.user__field_value}>{leader.name}</div>
               <div className={styles.user__field_value}>
+                {leader.achievements.map((achievement, i) => (
+                  <img
+                    key={i}
+                    src={getAchievementImage(achievement)}
+                    alt={`Achievement ${achievement}`}
+                    className={styles.achievement_image}
+                  />
+                ))}
                 {/* {leader.achievements} */}
-                <img src={getAchievementImage(leader.achievements)} alt="ds" />
+                {/* <img src={getAchievementImage(leader.achievements)} alt="ds" /> */}
               </div>
               <div className={styles.user__field_value}>{formatTime(leader.time)}</div>
             </div>

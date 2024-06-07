@@ -60,3 +60,8 @@
     line-height: 32px;
     text-align: left;
 }
+
+.achievement_image {
+    width: 26px;
+    height: 26px;
+}

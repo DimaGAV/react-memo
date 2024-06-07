@@ -6,6 +6,8 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { useMode } from "../../context/mode";
+import epiphany from "./assets/epiphany.png";
+// import alohomora from "./assets/alohomora.png";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -54,7 +56,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const { mode } = useMode();
   // const mode = localStorage.getItem("mode");
   const [lifes, setLifes] = useState(mode ? 3 : 1);
-
+  const [isUseSuperPower, setIsUseSuperPower] = useState(false);
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
   const [timer, setTimer] = useState({
     seconds: 0,
@@ -79,6 +81,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setStatus(STATUS_PREVIEW);
     setLifes(mode ? 3 : 1);
     setCards(shuffle(generateDeck(pairsCount, 10)));
+    setIsUseSuperPower(false);
   }
 
   /**
@@ -187,6 +190,19 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     };
   }, [gameStartDate, gameEndDate]);
 
+  const epiphanyHandler = () => {
+    const oldCards = cards;
+    setIsUseSuperPower(true);
+    setCards(
+      cards.map(card => {
+        return { ...card, open: true };
+      }),
+    );
+    setTimeout(() => {
+      setCards(oldCards);
+    }, 2000);
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -213,7 +229,26 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        {/* <img src="../../img/epiphany.png" /> */}
+        <div className={styles.superPowerContainer}>
+          <div>
+            <div onClick={epiphanyHandler} className={!isUseSuperPower ? styles.wrapper : styles.disabled}>
+              <img className={styles.superPower} src={epiphany} alt="" />
+              <div className={styles.bubble}>
+                <h4 className={styles.title}>Прозрение</h4>
+                <p className={styles.description}>Открой карты на 5 секунд</p>
+              </div>
+            </div>
+            <div className={styles.layout}></div>
+          </div>
+          {/* <div className={styles.wrapper}>
+                  <div className={styles.layout}></div>
+                  <img className={styles.superPower} src={alohomora} alt="" />
+                  <div className={styles.bubble}>
+                    <h4 className={styles.title}>Заголовок</h4>
+                    <p className={styles.description}>Открой </p>
+                  </div>
+                </div> */}
+        </div>
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>
 
@@ -228,7 +263,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           />
         ))}
       </div>
-
       {isGameEnded ? (
         <div className={styles.modalContainer}>
           <EndGameModal
