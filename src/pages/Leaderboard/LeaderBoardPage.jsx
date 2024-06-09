@@ -76,8 +76,6 @@ export function LeaderBoardPage() {
                     className={styles.achievement_image}
                   />
                 ))}
-                {/* {leader.achievements} */}
-                {/* <img src={getAchievementImage(leader.achievements)} alt="ds" /> */}
               </div>
               <div className={styles.user__field_value}>{formatTime(leader.time)}</div>
             </div>
