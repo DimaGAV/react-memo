@@ -233,9 +233,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                 <div className={styles.timerDescription}>sec</div>
                 <div>{timer.seconds.toString().padStart("2", "0")}</div>
               </div>
-              <div>
-                <p className={styles.threetrygame}>Осталось попыток: {lifes} </p>
-              </div>
             </>
           )}
         </div>
@@ -245,7 +242,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
               <img className={styles.superPower} src={epiphany} alt="" />
               <div className={styles.bubble}>
                 <h4 className={styles.title}>Прозрение</h4>
-                <p className={styles.description}>Открой карты на 5 секунд</p>
+                <p className={styles.description}>
+                  На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
+                </p>
               </div>
             </div>
             <div className={styles.layout}></div>
@@ -261,7 +260,13 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
         </div>
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>
-
+      {status === STATUS_IN_PROGRESS && mode ? (
+        <div>
+          <p className={styles.threetrygame}>Осталось попыток: {lifes} </p>
+        </div>
+      ) : (
+        ""
+      )}
       <div className={styles.cards}>
         {cards.map(card => (
           <Card
