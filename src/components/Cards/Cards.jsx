@@ -56,7 +56,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   const { mode } = useMode();
   const [lifes, setLifes] = useState(mode ? 3 : 1);
   const [isUseSuperPower, setIsUseSuperPower] = useState(false);
-  // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
+  const [superPowerActive, setSuperPowerActive] = useState(false);
   const [timer, setTimer] = useState({
     seconds: 0,
     minutes: 0,
@@ -182,24 +182,35 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   // Обновляем значение таймера в интервале
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimer(getTimerValue(gameStartDate, gameEndDate));
+      if (!superPowerActive) {
+        setTimer(getTimerValue(gameStartDate, gameEndDate));
+      }
     }, 300);
     return () => {
       clearInterval(intervalId);
     };
-  }, [gameStartDate, gameEndDate]);
+  }, [superPowerActive, gameStartDate, gameEndDate]);
 
   const epiphanyHandler = () => {
     const oldCards = cards;
     setIsUseSuperPower(true);
+    setSuperPowerActive(true);
+
+    const superPowerStart = new Date();
+
     setCards(
       cards.map(card => {
         return { ...card, open: true };
       }),
     );
     setTimeout(() => {
+      setSuperPowerActive(false);
       setCards(oldCards);
-    }, 2000);
+
+      const superPowerEnd = new Date();
+      const superPowerDuration = superPowerEnd - superPowerStart;
+      setGameStartDate(prevDate => new Date(prevDate.getTime() + superPowerDuration));
+    }, 5000);
   };
 
   return (
