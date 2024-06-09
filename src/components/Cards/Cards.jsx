@@ -54,7 +54,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   // Дата конца игры
   const [gameEndDate, setGameEndDate] = useState(null);
   const { mode } = useMode();
-  // const mode = localStorage.getItem("mode");
   const [lifes, setLifes] = useState(mode ? 3 : 1);
   const [isUseSuperPower, setIsUseSuperPower] = useState(false);
   // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
@@ -271,6 +270,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             gameDurationMinutes={timer.minutes}
             onClick={resetGame}
             isLeader={status === STATUS_WON && pairsCount === 3}
+            isUseSuperPower={isUseSuperPower}
           />
         </div>
       ) : null}
