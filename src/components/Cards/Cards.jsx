@@ -236,20 +236,21 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        <div className={styles.superPowerContainer}>
-          <div>
-            <div onClick={epiphanyHandler} className={!isUseSuperPower ? styles.wrapper : styles.disabled}>
-              <img className={styles.superPower} src={epiphany} alt="" />
-              <div className={styles.bubble}>
-                <h4 className={styles.title}>Прозрение</h4>
-                <p className={styles.description}>
-                  На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
-                </p>
+        {status === STATUS_IN_PROGRESS ? (
+          <div className={styles.superPowerContainer}>
+            <div>
+              <div onClick={epiphanyHandler} className={!isUseSuperPower ? styles.wrapper : styles.disabled}>
+                <img className={styles.superPower} src={epiphany} alt="" />
+                <div className={styles.bubble}>
+                  <h4 className={styles.title}>Прозрение</h4>
+                  <p className={styles.description}>
+                    На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
+                  </p>
+                </div>
               </div>
+              <div className={styles.layout}></div>
             </div>
-            <div className={styles.layout}></div>
-          </div>
-          {/* <div className={styles.wrapper}>
+            {/* <div className={styles.wrapper}>
                   <div className={styles.layout}></div>
                   <img className={styles.superPower} src={alohomora} alt="" />
                   <div className={styles.bubble}>
@@ -257,7 +258,10 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                     <p className={styles.description}>Открой </p>
                   </div>
                 </div> */}
-        </div>
+          </div>
+        ) : (
+          ""
+        )}
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>
       {status === STATUS_IN_PROGRESS && mode ? (

@@ -128,13 +128,13 @@
 }
 
 .bubble {
-  width: 222px;
+  width: 162px;
   position: absolute;
   padding: 30px;
   text-align: center;
   top: 15px;
-  left: -50%;
-  transform: translateY(50%);
+  left: -100%;
+  transform: translateY(40%);
   display: none;
   border-radius: 12px;
   background: rgb(194, 245, 255);
