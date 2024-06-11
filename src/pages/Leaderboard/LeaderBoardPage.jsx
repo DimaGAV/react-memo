@@ -71,7 +71,7 @@ export function LeaderBoardPage() {
         ) : (
           leadersList.map((leader, index) => (
             <div key={leader.id} className={styles.user__field}>
-              <div className={styles.user__field_value}> # {index + 1}</div>
+              <div className={styles.user__field_value}># {index + 1}</div>
               <div className={styles.user__field_value}>{leader.name}</div>
               <div className={styles.user__field_value}>
                 {leader.achievements.map((achievement, i) => {

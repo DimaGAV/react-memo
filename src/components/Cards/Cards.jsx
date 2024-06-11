@@ -250,14 +250,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
               </div>
               <div className={styles.layout}></div>
             </div>
-            {/* <div className={styles.wrapper}>
-                  <div className={styles.layout}></div>
-                  <img className={styles.superPower} src={alohomora} alt="" />
-                  <div className={styles.bubble}>
-                    <h4 className={styles.title}>Заголовок</h4>
-                    <p className={styles.description}>Открой </p>
-                  </div>
-                </div> */}
           </div>
         ) : (
           ""
