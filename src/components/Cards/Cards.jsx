@@ -281,7 +281,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}
             onClick={resetGame}
-            isLeader={status === STATUS_WON && pairsCount === 3}
+            isLeader={status === STATUS_WON && pairsCount === 9}
             isUseSuperPower={isUseSuperPower}
           />
         </div>
