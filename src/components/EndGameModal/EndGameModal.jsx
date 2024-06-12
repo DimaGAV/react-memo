@@ -7,11 +7,14 @@ import celebrationImageUrl from "./images/celebration.png";
 import { useState } from "react";
 import { uploadLeaders } from "../../api";
 import { Link } from "react-router-dom";
+import { useMode } from "../../context/mode";
 
-export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader }) {
+export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick, isLeader, isUseSuperPower }) {
   const [userName, setUserName] = useState("");
   const [error, setError] = useState(null);
   const [isUpLoad, setisUpLoad] = useState(false);
+  const [achievements, setAchivments] = useState([]);
+  const { mode } = useMode();
 
   const title = isLeader ? "Вы попали на Лидерборд!" : isWon ? "Вы победили!" : "Вы проиграли!";
 
@@ -25,8 +28,22 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       alert("Введите имя игрока");
       return;
     }
+
+    const updatedAchievements = [...achievements];
+    if (!mode && !updatedAchievements.includes(1)) {
+      updatedAchievements.push(1);
+    }
+    if (!isUseSuperPower && !updatedAchievements.includes(2)) {
+      updatedAchievements.push(2);
+    }
+
     try {
-      await uploadLeaders({ name: userName, time: gameDurationMinutes * 60 + gameDurationSeconds });
+      await uploadLeaders({
+        name: userName,
+        time: gameDurationMinutes * 60 + gameDurationSeconds,
+        achievements: updatedAchievements,
+      });
+      setAchivments(updatedAchievements);
       setisUpLoad(true);
       setError(false);
     } catch (err) {

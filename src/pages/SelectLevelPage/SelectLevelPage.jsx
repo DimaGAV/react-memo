@@ -6,14 +6,15 @@ import { useState } from "react";
 
 export function SelectLevelPage() {
   const { mode, setMode } = useMode();
-  const [selectedLevel, setSelectedLevel] = useState(null);
+  const [selectedLevel, setSelectedLevel] = useState(0);
+  const [error, setError] = useState(null);
 
   const startGame = () => {
     if (selectedLevel !== 0) {
       const gameRoute = `react-memo/game/${selectedLevel}`;
       window.location.href = gameRoute;
     } else {
-      alert("Выберите уровень сложности");
+      setError("Выберите уровень сложности!!!");
     }
   };
 
@@ -61,6 +62,7 @@ export function SelectLevelPage() {
             </Link>
           </li> */}
         </ul>
+        {!selectedLevel ? error && <p className={styles.texterror}>{error}</p> : ""}
         <label htmlFor="ch1" className={styles.selectModeLabel}>
           <input id="ch1" label="Игра с 3 попытками" checked={mode} type="checkbox" onChange={() => setMode(!mode)} />
           <span className={styles.checkbox_container}></span>
