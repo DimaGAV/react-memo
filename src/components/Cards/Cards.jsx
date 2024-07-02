@@ -6,6 +6,8 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { useMode } from "../../context/mode";
+import epiphany from "./assets/epiphany.png";
+// import alohomora from "./assets/alohomora.png";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -52,10 +54,9 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   // Дата конца игры
   const [gameEndDate, setGameEndDate] = useState(null);
   const { mode } = useMode();
-  // const mode = localStorage.getItem("mode");
   const [lifes, setLifes] = useState(mode ? 3 : 1);
-
-  // Стейт для таймера, высчитывается в setInteval на основе gameStartDate и gameEndDate
+  const [isUseSuperPower, setIsUseSuperPower] = useState(false);
+  const [superPowerActive, setSuperPowerActive] = useState(false);
   const [timer, setTimer] = useState({
     seconds: 0,
     minutes: 0,
@@ -79,6 +80,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     setStatus(STATUS_PREVIEW);
     setLifes(mode ? 3 : 1);
     setCards(shuffle(generateDeck(pairsCount, 10)));
+    setIsUseSuperPower(false);
   }
 
   /**
@@ -180,12 +182,36 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
   // Обновляем значение таймера в интервале
   useEffect(() => {
     const intervalId = setInterval(() => {
-      setTimer(getTimerValue(gameStartDate, gameEndDate));
+      if (!superPowerActive) {
+        setTimer(getTimerValue(gameStartDate, gameEndDate));
+      }
     }, 300);
     return () => {
       clearInterval(intervalId);
     };
-  }, [gameStartDate, gameEndDate]);
+  }, [superPowerActive, gameStartDate, gameEndDate]);
+
+  const epiphanyHandler = () => {
+    const oldCards = cards;
+    setIsUseSuperPower(true);
+    setSuperPowerActive(true);
+
+    const superPowerStart = new Date();
+
+    setCards(
+      cards.map(card => {
+        return { ...card, open: true };
+      }),
+    );
+    setTimeout(() => {
+      setSuperPowerActive(false);
+      setCards(oldCards);
+
+      const superPowerEnd = new Date();
+      const superPowerDuration = superPowerEnd - superPowerStart;
+      setGameStartDate(prevDate => new Date(prevDate.getTime() + superPowerDuration));
+    }, 5000);
+  };
 
   return (
     <div className={styles.container}>
@@ -207,16 +233,36 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
                 <div className={styles.timerDescription}>sec</div>
                 <div>{timer.seconds.toString().padStart("2", "0")}</div>
               </div>
-              <div>
-                <p className={styles.threetrygame}>Осталось попыток: {lifes} </p>
-              </div>
             </>
           )}
         </div>
-
+        {status === STATUS_IN_PROGRESS ? (
+          <div className={styles.superPowerContainer}>
+            <div>
+              <div onClick={epiphanyHandler} className={!isUseSuperPower ? styles.wrapper : styles.disabled}>
+                <img className={styles.superPower} src={epiphany} alt="" />
+                <div className={styles.bubble}>
+                  <h4 className={styles.title}>Прозрение</h4>
+                  <p className={styles.description}>
+                    На 5 секунд показываются все карты. Таймер длительности игры на это время останавливается.
+                  </p>
+                </div>
+              </div>
+              <div className={styles.layout}></div>
+            </div>
+          </div>
+        ) : (
+          ""
+        )}
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>
-
+      {status === STATUS_IN_PROGRESS && mode ? (
+        <div>
+          <p className={styles.threetrygame}>Осталось попыток: {lifes} </p>
+        </div>
+      ) : (
+        ""
+      )}
       <div className={styles.cards}>
         {cards.map(card => (
           <Card
@@ -228,7 +274,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
           />
         ))}
       </div>
-
       {isGameEnded ? (
         <div className={styles.modalContainer}>
           <EndGameModal
@@ -236,7 +281,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}
             onClick={resetGame}
-            isLeader={status === STATUS_WON && pairsCount === 3}
+            isLeader={status === STATUS_WON && pairsCount === 9}
+            isUseSuperPower={isUseSuperPower}
           />
         </div>
       ) : null}
